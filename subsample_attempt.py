@@ -1,5 +1,5 @@
 ### Plots x vs y position graphs with vz color bar for gas ###
-### Left graph is just vz coloring and right graph is vz coloring with blue position of stars on top to make it easier to see the spiral arms ###
+### Left graph is just vz coloring and right graph is vz coloring with black position of stars on top to make it easier to see the spiral arms ###
 ### [0] = Gas ###
 ### [4] = Star ###
 

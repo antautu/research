@@ -5,7 +5,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_030')
+s = glio.GadgetSnapshot('snapshot_040')
 s.load()
 
 ### Produces data for the gas x vs y graph ###
@@ -38,9 +38,9 @@ for line in lines:
 	star_y_xy.append(float(p[1]))
 		
 star_px_xy = np.array(star_x_xy)
-a = star_px_xy[0::8]				### [0::n] starts from beginning and then takes steps of size n ###
+a = star_px_xy[0::10]				### [0::n] starts from beginning and then takes steps of size n ###
 star_py_xy = np.array(star_y_xy)
-b = star_py_xy[0::8]
+b = star_py_xy[0::10]
 		
 f2 = open('data_gas_xy')
 lines = f2.readlines()
@@ -55,9 +55,9 @@ for line in lines:
 	gas_y_xy.append(float(p[1]))
 		
 gas_px_xy = np.array(gas_x_xy)
-c = gas_px_xy[0::4]
+c = gas_px_xy[0::2]
 gas_py_xy = np.array(gas_y_xy)
-d = gas_py_xy[0::4]
+d = gas_py_xy[0::2]
 		
 		
 plt.subplot(121)
@@ -65,7 +65,7 @@ plt.plot(a, b, '.', markersize=3, alpha=0.3)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Star x vs y')
-plt.text(20, 20, 't = 30')			### Make sure to change time label ###
+plt.text(20, 20, 't = 40')			### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 		
@@ -74,7 +74,7 @@ plt.plot(c, d, '.', markersize=3, alpha=0.3)
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('Gas x vs y')
-plt.text(20, 20, 't = 30')			### Make sure to change time label ###
+plt.text(20, 20, 't = 40')			### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 		
