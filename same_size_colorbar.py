@@ -1,5 +1,5 @@
 ### Plots x vs y position graphs with vz color bar for gas ###
-### Left graph is just vz coloring and right graph is vz coloring with black position of stars on top to make it easier to see the spiral arms ###
+### Left graph is just vz coloring and right graph is vz coloring with blue gas positon on top to make it easier to see the spiral arms ###
 ### [0] = Gas ###
 ### [4] = Star ###
 
@@ -10,7 +10,7 @@ import matplotlib.cm as cm
 import matplotlib.mlab as ml
 import matplotlib as mpl
 import glio
-s = glio.GadgetSnapshot('snapshot_030')		### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_015')		### Change snapshot here ###
 s.load()
 
 
@@ -76,9 +76,7 @@ for line in lines:
 	star_vz_xy.append(float(p[2]))
 
 star_px_xy = np.array(star_x_xy)
-#a = star_px_xy[0::4]
 star_py_xy = np.array(star_y_xy)
-#b = star_py_xy[0::4]
 star_vz_bar = np.array(star_vz_xy)
 
 f2 = open('data_gas_xy_vz')
@@ -96,35 +94,36 @@ for line in lines:
 	gas_vz_xy.append(float(p[2]))
 
 gas_px_xy = np.array(gas_x_xy)
-a = gas_px_xy[0::4]
+a = gas_px_xy[0::2]
 gas_py_xy = np.array(gas_y_xy)
-b = gas_py_xy[0::4]
+b = gas_py_xy[0::2]
 gas_vz_bar = np.array(gas_vz_xy)
 
 
+### Plots the graphs ###
 plt.subplot(121)
-plt.hexbin(gas_px_xy, gas_py_xy, C=gas_vz_bar, cmap=cm.jet_r, gridsize=300, vmin=-20, vmax=20)
-plt.title('Gas x vs y')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.text(20, 20, 't = 5')				### Make sure to change time label ###
+plt.hexbin(gas_px_xy, gas_py_xy, C=gas_vz_bar, cmap=cm.gist_ncar, gridsize=300, vmin=-20, vmax=20)
+plt.title('Gas x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(20, 20, 't = 39', fontsize=15)				### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
-#cbar = plt.colorbar()
-#cbar.set_label('Vz')
+cbar = plt.colorbar(fraction=0.046, pad=0.04)
+cbar.set_label('Vz', fontsize=18)
 plt.grid()
 
 plt.subplot(122)
-plt.hexbin(gas_px_xy, gas_py_xy, C=gas_vz_bar, cmap=cm.jet_r, gridsize=300, vmin=-20, vmax=20)
-plt.plot(a, b, '.k', markersize=3, alpha=0.3)
-plt.title('Gas x vs y')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.text(20, 20, 't = 5')				### Make sure to change time label ###
+plt.hexbin(gas_px_xy, gas_py_xy, C=gas_vz_bar, cmap=cm.gist_ncar, gridsize=300, vmin=-20, vmax=20)
+plt.plot(a, b, '.', markersize=3, alpha=0.3)
+plt.title('Gas x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(20, 20, 't = 39', fontsize=15)				### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
-#cbar = plt.colorbar()
-#cbar.set_label('Vz')
+cbar = plt.colorbar(fraction=0.046, pad=0.04)
+cbar.set_label('Vz', fontsize=18)
 plt.grid()
 
 plt.show()

@@ -4,7 +4,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_000')		### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_001')		### Change snapshot here ###
 s.load()
 
 

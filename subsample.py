@@ -38,9 +38,9 @@ for line in lines:
 	star_y_xy.append(float(p[1]))
 		
 star_px_xy = np.array(star_x_xy)
-a = star_px_xy[0::10]				### [0::n] starts from beginning and then takes steps of size n ###
+a = star_px_xy[0::12]				### [0::n] starts from beginning and then takes steps of size n ###
 star_py_xy = np.array(star_y_xy)
-b = star_py_xy[0::10]
+b = star_py_xy[0::12]
 		
 f2 = open('data_gas_xy')
 lines = f2.readlines()
@@ -62,19 +62,19 @@ d = gas_py_xy[0::2]
 		
 plt.subplot(121)
 plt.plot(a, b, '.', markersize=3, alpha=0.3)
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Star x vs y')
-plt.text(20, 20, 't = 40')			### Make sure to change time label ###
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.title('Star x vs y Subsampled', fontsize=22)
+plt.text(20, 20, 't = 40', fontsize=15)			### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 		
 plt.subplot(122)
 plt.plot(c, d, '.', markersize=3, alpha=0.3)
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Gas x vs y')
-plt.text(20, 20, 't = 40')			### Make sure to change time label ###
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.title('Gas x vs y Subsampled', fontsize = 22)
+plt.text(20, 20, 't = 40', fontsize=15)			### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 		
