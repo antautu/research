@@ -110,7 +110,7 @@ plt.hexbin(star_px, star_py, C=star_vz_bar, cmap=cm.Set1, gridsize=300, vmin=-20
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 0', fontsize=15)
+plt.text(20, 20, 't = 1', fontsize=15)						### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -120,7 +120,7 @@ plt.hexbin(gas_px, gas_py, C=gas_vz_bar, cmap=cm.Set1, gridsize=300, vmin=-20, v
 plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 0', fontsize=15)
+plt.text(20, 20, 't = 1', fontsize=15)						### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -129,6 +129,8 @@ cax = plt.axes([0.125, 0.075, 0.775, 0.03])
 cbar = plt.colorbar(cax=cax, orientation='horizontal')
 cbar.set_label('Vz (km/sec)', fontsize=18)
 
+plt.show()
+
 
 ### Plots the Vr bar graphs ###
 plt.subplot(121)
@@ -136,7 +138,7 @@ plt.hexbin(star_px, star_py, C=star_vr_bar, cmap=cm.Set1, gridsize=300, vmin=-12
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 0', fontsize=15)
+plt.text(20, 20, 't = 1', fontsize=15)						### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -146,7 +148,7 @@ plt.hexbin(gas_px, gas_py, C=gas_vr_bar, cmap=cm.Set1, gridsize=300, vmin=-120, 
 plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 0', fontsize=15)
+plt.text(20, 20, 't = 1', fontsize=15)						### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -155,6 +157,7 @@ cax = plt.axes([0.125, 0.075, 0.775, 0.03])
 cbar = plt.colorbar(cax=cax, orientation='horizontal')
 cbar.set_label('Vr (km/sec)', fontsize=18)
 
+plt.show()
 
 ### Plots the Vtheta bar graphs ###
 plt.subplot(121)
@@ -162,7 +165,7 @@ plt.hexbin(star_px, star_py, C=star_vtheta_bar, cmap=cm.jet_r, gridsize=300, vmi
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 0', fontsize=15)
+plt.text(20, 20, 't = 1', fontsize=15)						### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -172,7 +175,7 @@ plt.hexbin(gas_px, gas_py, C=gas_vtheta_bar, cmap=cm.jet_r, gridsize=300, vmin=1
 plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 0', fontsize=15)
+plt.text(20, 20, 't = 1', fontsize=15)						### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -180,3 +183,5 @@ plt.grid()
 cax = plt.axes([0.125, 0.075, 0.775, 0.03])
 cbar = plt.colorbar(cax=cax, orientation='horizontal')
 cbar.set_label('Vtheta (km/sec)', fontsize=18)
+
+plt.show()

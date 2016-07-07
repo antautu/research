@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_001')
+s = glio.GadgetSnapshot('snapshot_010')
 s.load()
 
 
@@ -201,5 +201,3 @@ plt.title('Boundary x vs y', fontsize=22)
 plt.gca().set_aspect('equal', adjustable='box')
 
 plt.show()
-
-

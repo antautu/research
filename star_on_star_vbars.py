@@ -5,7 +5,7 @@ import matplotlib.cm as cm
 import matplotlib.mlab as mlab 
 import matplotlib as mpl 
 import glio 
-s = glio.GadgetSnapshot('snapshot_001') 
+s = glio.GadgetSnapshot('snapshot_020') 
 s.load() 
  
 
@@ -53,9 +53,9 @@ for line in lines:
  	star_vtheta.append(float(p[4])) 
  	 
 star_px = np.array(star_x) 
-a = star_px[0::2]
+a = star_px[0::4]									### Change subsample rate here ###
 star_py = np.array(star_y) 
-b = star_py[0::2]
+b = star_py[0::4]									### Change subsample rate here ###
 star_vz_bar = np.array(star_vz) 
 star_vr_bar = np.array(star_vr) 
 star_vtheta_bar= np.array(star_vtheta) 
@@ -67,7 +67,7 @@ plt.hexbin(star_px, star_py, C=star_vz_bar, cmap=cm.Set1, gridsize=300, vmin=-20
 plt.title('Star x vs y', fontsize=22) 
 plt.xlabel('x (kpc)', fontsize=18) 
 plt.ylabel('y (kpc)', fontsize=18) 
-plt.text(20, 20, 't = 1', fontsize=15)				### Make sure to change time label ### 
+plt.text(20, 20, 't = 20', fontsize=15)				### Make sure to change time label ### 
 plt.axis([-25, 25, -25, 25]) 
 plt.gca().set_aspect('equal', adjustable='box') 
 plt.grid() 
@@ -78,7 +78,7 @@ plt.plot(a, b, '.', markersize=3, alpha=0.3)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 1', fontsize=15)				### Make sure to change time label ###
+plt.text(20, 20, 't = 20', fontsize=15)				### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -96,7 +96,7 @@ plt.hexbin(star_px, star_py, C=star_vr_bar, cmap=cm.Set1, gridsize=300, vmin=-12
 plt.title('Star x vs y', fontsize=22) 
 plt.xlabel('x (kpc)', fontsize=18) 
 plt.ylabel('y (kpc)', fontsize=18) 
-plt.text(20, 20, 't = 1', fontsize=15)				### Make sure to change time label ### 
+plt.text(20, 20, 't = 20', fontsize=15)				### Make sure to change time label ### 
 plt.axis([-25, 25, -25, 25]) 
 plt.gca().set_aspect('equal', adjustable='box') 
 plt.grid() 
@@ -107,7 +107,7 @@ plt.plot(a, b, '.', markersize=3, alpha=0.3)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 1', fontsize=15)				### Make sure to change time label ### 
+plt.text(20, 20, 't = 20', fontsize=15)				### Make sure to change time label ### 
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -121,22 +121,22 @@ plt.show()
 
 ### Plots the Vtheta bar graphs ### 
 plt.subplot(121) 
-plt.hexbin(star_px, star_py, C=star_vtheta_bar, cmap=cm.Set1, gridsize=300, vmin=180, vmax=240) 
+plt.hexbin(star_px, star_py, C=star_vtheta_bar, cmap=cm.jet_r, gridsize=300, vmin=180, vmax=240) 
 plt.title('Star x vs y', fontsize=22) 
 plt.xlabel('x (kpc)', fontsize=18) 
 plt.ylabel('y (kpc)', fontsize=18) 
-plt.text(20, 20, 't = 1', fontsize=15)				### Make sure to change time label ### 
+plt.text(20, 20, 't = 20', fontsize=15)				### Make sure to change time label ### 
 plt.axis([-25, 25, -25, 25]) 
 plt.gca().set_aspect('equal', adjustable='box') 
 plt.grid() 
 
 plt.subplot(122)
-plt.hexbin(star_px, star_py, C=star_vtheta_bar, cmap=cm.Set1, gridsize=300, vmin=180, vmax=240)
-plt.plot(a, b, '.', markersize=3, alpha=0.3)
+plt.hexbin(star_px, star_py, C=star_vtheta_bar, cmap=cm.jet_r, gridsize=300, vmin=180, vmax=240)
+plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.3)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 1', fontsize=15)				### Make sure to change time label ###
+plt.text(20, 20, 't = 20', fontsize=15)				### Make sure to change time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
