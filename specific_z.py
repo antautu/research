@@ -6,32 +6,55 @@ s = glio.GadgetSnapshot('snapshot_010')
 s.load()
 
 
-f = open('data_gas_xyz', 'w')
+### Produces data for gas x values ###
+f = open('data_gas_x', 'w')
 for i in range(0, len(s.pos[0][:])):
-	f.write("%s %s %s\n" % (s.pos[0][i][0], s.pos[0][i][1], s.pos[0][i][2]))
+	f.write("%s\n" % s.pos[0][i][0])
 
 f.close()
 
-
-f2 = open('data_gas_xyz')
+f2 = open('data_gas_x')
 lines = f2.readlines()
 f2.close()
 
 gas_x = []
-gas_y = []
-gas_z = []
-
-for line in lines:
-	p = line.split()
-	gas_x.append(float(p[0]))
-	gas_y.append(float(p[1]))
-	gas_z.append(float(p[2]))
 
 gas_px = np.array(gas_x)
+
+
+### Produces data for gas y values ###
+f = open('data_gas_y', 'w')
+for i in range(0, len(s.pos[0][:])):
+	f.write("%s\n" % s.pos[0][i][1])
+
+f.close()
+
+f2 = open('data_gas_y')
+lines = f2.readlines()
+f2.close()
+
+gas_y = []
+
 gas_py = np.array(gas_y)
-gas_pz = np.array(gas_y)
 
 
+### Produces data for gas z values ###
+f = open('data_gas_z', 'w')
+for i in range(0, len(s.pos[0][:])):
+	f.write("%s\n" % s.pos[0][i][2])
+
+f.close()
+
+f2 = open('data_gas_z')
+lines = f2.readlines()
+f2.close()
+
+gas_z = []
+
+gas_pz = np.array(gas_z)
+
+
+### For loop that chooses x and y values for specific values of z ###
 x = []
 y = []
 
@@ -40,5 +63,8 @@ for i in range(len(gas_pz)):
 		x.append[gas_px[i]]
 		y.append[gas_py[i]]
 
-plt.plot(x, y)
+x_new = np.array(x)
+y_new = np.array(y)
+
+plt.plot(x_new, y_new)
 plt.show()
