@@ -2,69 +2,157 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_010')
+s = glio.GadgetSnapshot('snapshot_010')					### Change snapshot here ###
 s.load()
 
-
-### Produces data for gas x values ###
-f = open('data_gas_x', 'w')
+########## Produces data for x, y, and z gas postion values ##########
+f = open('data_gas_xyz', 'w')
 for i in range(0, len(s.pos[0][:])):
-	f.write("%s\n" % s.pos[0][i][0])
+	f.write("%s %s %s\n" % (s.pos[0][i][0], s.pos[0][i][1], s.pos[0][i][2]))
 
 f.close()
 
-f2 = open('data_gas_x')
+
+f2 = open('data_gas_xyz')
 lines = f2.readlines()
 f2.close()
 
 gas_x = []
-
-gas_px = np.array(gas_x)
-
-
-### Produces data for gas y values ###
-f = open('data_gas_y', 'w')
-for i in range(0, len(s.pos[0][:])):
-	f.write("%s\n" % s.pos[0][i][1])
-
-f.close()
-
-f2 = open('data_gas_y')
-lines = f2.readlines()
-f2.close()
-
 gas_y = []
-
-gas_py = np.array(gas_y)
-
-
-### Produces data for gas z values ###
-f = open('data_gas_z', 'w')
-for i in range(0, len(s.pos[0][:])):
-	f.write("%s\n" % s.pos[0][i][2])
-
-f.close()
-
-f2 = open('data_gas_z')
-lines = f2.readlines()
-f2.close()
-
 gas_z = []
 
+
+for line in lines:
+	p = line.split()
+	gas_x.append(float(p[0]))
+	gas_y.append(float(p[1]))
+	gas_z.append(float(p[2]))
+
+gas_px = np.array(gas_x)
+gas_py = np.array(gas_y)
 gas_pz = np.array(gas_z)
 
 
-### For loop that chooses x and y values for specific values of z ###
-x = []
-y = []
+########## For loops that split up gas z values ##########
+
+### z > 0.5 ###
+x1 = []
+y1 = []
 
 for i in range(len(gas_pz)):
-	if gas_pz > 0.5:
-		x.append[gas_px[i]]
-		y.append[gas_py[i]]
+	if gas_pz[i] > 0.5:
+		x1.append(gas_px[i])
+		y1.append(gas_py[i])
 
-x_new = np.array(x)
-y_new = np.array(y)
+### 0.5 > z 0.4 ###
+x2 = []
+y2 = []
 
-plt.plot(x_new, y_new)
+for i in range(len(gas_pz)):
+	if 0.5 > gas_pz[i] > 0.4:
+		x2.append(gas_px[i])
+		y2.append(gas_py[i])
+
+### 0.4 > z > 0.3 ###
+x3 = []
+y3 = []
+
+for i in range(len(gas_pz)):
+	if 0.4 > gas_pz[i] > 0.3:
+		x3.append(gas_px[i])
+		y3.append(gas_py[i])
+
+### 0.3 > z 0.2 ###
+x4 = []
+y4 = []
+
+for i in range(len(gas_pz)):
+	if 0.3 > gas_pz[i] > 0.2:
+		x4.append(gas_px[i])
+		y4.append(gas_py[i])
+
+### 0.2 > z 0.1 ###
+x5 = []
+y5 = []
+
+for i in range(len(gas_pz)):
+	if 0.2 > gas_pz[i] > 0.1:
+		x5.append(gas_px[i])
+		y5.append(gas_py[i])
+
+### 0.1 > z > 0.0 ###
+x6 = []
+y6 = []
+
+for i in range(len(gas_pz)):
+	if 0.1 > gas_pz[i] > 0.0:
+		x6.append(gas_px[i])
+		y6.append(gas_py[i])
+
+### z < 0.0 ###
+x7 = []
+y7 = []
+
+for i in range(len(gas_pz)):
+	if gas_pz[i] < 0.0:
+		x7.append(gas_px[i])
+		y7.append(gas_py[i])
+
+
+########## Plots x vs y gas position graph for specific z values ##########
+
+### z > 0.5 ###
+plt.plot(x1, y1, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15) 					### Make sure to change time label ###
+plt.text(19.9, 19, 'z > 0.5', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+### 0.5 > z > 0.4 ###
+plt.plot(x2, y2, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15)					### Make sure to change time label ###
+plt.text(18.6, 19, '0.5 > z > 0.4', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+### 0.4 > z > 0.3 ###
+plt.plot(x3, y3, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15)					### Make sure to change time label ###
+plt.text(18.6, 19, '0.4 > z > 0.3', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+### 0.3 > z > 0.2 ###
+plt.plot(x4, y4, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15)					### Make sure to change time label ###
+plt.text(18.6, 19, '0.3 > z > 0.2', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+### 0.2 > z > 0.1 ###
+plt.plot(x5, y5, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15)					### Make sure to change time label ###
+plt.text(18.6, 19, '0.2 > z > 0.1', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+### 0.1 > z > 0.0 ###
+plt.plot(x6, y6, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15)					### Make sure to change time label ###
+plt.text(18.6, 19, '0.1 > z > 0.0', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.show()
+
+### z < 0.0 ###
+plt.plot(x7, y7, '.', markersize=3)
+plt.text(20, 20, 't = 10', fontsize=15)					### Make sure to change time label ###
+plt.text(19.9, 19, 'z < 0.0', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
