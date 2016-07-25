@@ -1,7 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_040')
+s = glio.GadgetSnapshot('snapshot_022')
 s.load()
 
 f = open('data_halo_xyz', 'w')
@@ -28,26 +28,14 @@ halo_px = np.array(halo_x)
 halo_py = np.array(halo_y)
 halo_pz = np.array(halo_z)
 
-#plt.plot(halo_px, halo_py, '.', markersize=3, alpha=0.3)
-#plt.title('Halo x vs y', fontsize=30)
-#plt.xlabel('x (kpc)', fontsize=25)
-#plt.ylabel('y (kpc)', fontsize=25)
-#plt.xticks(fontsize=15)
-#plt.yticks(fontsize=15)
-#plt.text(8500, 9000, 't = 5', fontsize=18)
-#plt.axis([-10000, 10000, -10000, 10000])
-#plt.gca().set_aspect('equal', adjustable='box')
-#plt.grid()
-#plt.show()
-
-
-plt.plot(halo_px, halo_py, '.', markersize=3)
+plt.plot(halo_px, halo_py, '.', markersize=3, alpha=0.05)
 plt.title('Halo x vs y', fontsize=30)
 plt.xlabel('x (kpc)', fontsize=25)
 plt.ylabel('y (kpc)', fontsize=25)
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-#plt.axis([-20000, 20000, -20000, 20000])
+plt.text(170, 175, 't = 22', fontsize=18)					### Make sure to change time label ###
+plt.axis([-200, 200, -200, 200])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
-#plt.show() 
+plt.show()
