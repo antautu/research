@@ -1,5 +1,5 @@
 import glio
-s = glio.GadgetSnapshot('snapshot_000')
+s = glio.GadgetSnapshot('snapshot_040')
 s.load()
 
 
