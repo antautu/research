@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_000')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_020')						### Change snapshot here ###
 s.load()
 
 
@@ -80,4 +80,39 @@ print com_z
 
 
 ########## Centers the values by subtracting the center of mass ##########
-#centered_x[:] = [x - com_x for x in 
+gas_centered_x = np.array(gas_x)
+gas_centered_y = np.array(gas_y)
+gas_centered_z = np.array(gas_z)
+
+gas_centered_x[:] = [x - com_x for x in gas_centered_x]
+gas_centered_y[:] = [y - com_y for y in gas_centered_y]
+gas_centered_z[:] = [z - com_z for z in gas_centered_z]
+
+
+########## Plots centered gas position graphs ##########
+plt.plot(gas_centered_x, gas_centered_y, '.', markersize=3, alpha=0.3)
+plt.title('Centered Gas x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(20, 20, 't = 0', fontsize=15)
+plt.axis([-25, 25, -25, 25])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+plt.show()
+
+#plt.plot(gas_centered_x, gas_centered_z, '.', markersize=3, alpha=0.3)
+#plt.title('Centered Gas x vs z', fontsize=22)
+#plt.xlabel('x (kpc)', fontsize=18)
+#plt.ylabel('z (kpc)', fontsize=18)
+#plt.text(20, 20, 't = 0', fontsize=15)
+#plt.axis([-25, 25, -25, 25])
+#plt.gca().set_aspect('equal', adjustable='box')
+#plt.grid()
+#plt.show()
+
+
+
+
+
+
+
