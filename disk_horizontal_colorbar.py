@@ -1,8 +1,9 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 import glio
-s = glio.GadgetSnapshot('snapshot_040')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_020')						### Change snapshot here ###
 s.load()
 
 
@@ -90,7 +91,9 @@ disk_centered_y = np.array(disk_y)
 disk_centered_z = np.array(disk_z)
 
 disk_centered_x[:] = [x - com_x for x in disk_centered_x]
+a = disk_centered_x[0::6]
 disk_centered_y[:] = [y - com_y for y in disk_centered_y]
+b = disk_centered_y[0::6]
 disk_centered_z[:] = [z - com_z for z in disk_centered_z]
 
 
@@ -169,40 +172,31 @@ disk_centered_vz[:] = [vz - mom_vz for vz in disk_centered_vz]
 
 
 ########## Makes the transformations to cylindrical coordinates ##########
-f = open('data_disk_bars', 'w')
-for i in range(0, len(s.pos[2][:])):
-
-	r_disk = math.sqrt(disk_centered_x**2 + disk_centered_y**2)
-	theta_disk = math.atan2(disk_centered_y, disk_centered_x)
+r_disk = np.sqrt(disk_centered_x**2 + disk_centered_y**2)
+theta_disk = np.arctan2(disk_centered_y, disk_centered_x)
 	
-	vr_disk = disk_centered_vx*math.cos(theta_disk) + disk_centered_vy*math.sin(theta_disk)
-	vtheta_disk = disk_centered_vy*math.cos(theta_disk) - disk_centered_vx*math.sin(theta_disk)
-	
-	f.write("%s %s\n" % (vr_disk, vtheta_disk))
-
-f.close()
+vr_disk = disk_centered_vx*np.cos(theta_disk) + disk_centered_vy*np.sin(theta_disk)
+vtheta_disk = disk_centered_vy*np.cos(theta_disk) - disk_centered_vx*np.sin(theta_disk)
 
 
-########## Sets up the new velocity arrays ##########
-f2 = open('data_disk_bars')
-lines = f2.readlines()
-
-f2.close()
-
-disk_vr = []
-disk_vtheta = []
-
-for line in lines:
-	p = line.split()
-	disk_vr.append(float(p[0]))
-	disk_vtheta.append(float(p[1]))
-
-disk_centered_vr = np.array(disk_vr)
-disk_centered_vtheta = np.array(disk_vtheta)
+disk_centered_vr = np.array(vr_disk)
+disk_centered_vtheta = np.array(vtheta_disk)
 
 
-########## Plots the Vz bar graph ##########
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=300)
+########## Plots the Vz bar graphs ##########
+plt.subplot(121)
+plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=400, vmin=-20, vmax=20)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-30, 30, -30, 30])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.subplot(122)
+plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=400, vmin=-20, vmax=20)
+plt.plot(a, b, '.', markersize=3, alpha=0.3)
 plt.title('Disk x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
@@ -218,30 +212,60 @@ cbar.set_label('Vz (km/sec)', fontsize=18)
 plt.show()
 
 
+########## Plots the Vr bar graphs ##########
+plt.subplot(121)
+plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vr, cmap=cm.jet_r, gridsize=400, vmin=-60, vmax=60)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-30, 30, -30, 30])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.subplot(122)
+plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vr, cmap=cm.jet_r, gridsize=400, vmin=-60, vmax=60)
+plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.3)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-30, 30, -30, 30])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+cax = plt.axes([0.125, 0.075, 0.775, 0.03])
+cbar = plt.colorbar(cax = cax, orientation='horizontal')
+cbar.set_label('Vr (km/sec)', fontsize=18)
+
+plt.show()
 
 
+########## Plots the Vtheta bar graphs ##########
+plt.subplot(121)
+plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vtheta, cmap=cm.jet_r, gridsize=400, vmin=180, vmax=240)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-30, 30, -30, 30])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
 
+plt.subplot(122)
+plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vtheta, cmap=cm.jet_r, gridsize=400, vmin=180, vmax=240)
+plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.5)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-30, 30, -30, 30])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
 
+cax = plt.axes([0.125, 0.075, 0.775, 0.03])
+cbar = plt.colorbar(cax = cax, orientation='horizontal')
+cbar.set_label('Vtheta (km/sec)', fontsize=18)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+plt.show()
 
