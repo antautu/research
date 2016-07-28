@@ -1,11 +1,10 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
+import matplotlib.cm as cm 
 import glio
 s = glio.GadgetSnapshot('snapshot_040')						### Change snapshot here ###
 s.load()
-
 
 #################### POSITION ####################
 ########## Produces data for the x, y, and z position values for the disk ##########
@@ -16,7 +15,7 @@ for i in range(0, len(s.pos[2][:])):
 f.close()
 
 
-########## Produces data for the mass of the gas particles ##########
+########## Produces data for the mass of the disk particles ##########
 f = open('data_disk_mass', 'w')
 for i in range(0, len(s.mass[2][:])):
 	f.write("%s\n" % s.mass[2][i])
@@ -24,7 +23,7 @@ for i in range(0, len(s.mass[2][:])):
 f.close()
 
 
-########## Sets up the  x, y, and z postion arrays ##########
+########## Sets up the  x, y, and z postion arrays for the disk ##########
 f2 = open('data_disk_xyz')
 lines = f2.readlines()
 
@@ -91,10 +90,57 @@ disk_centered_y = np.array(disk_y)
 disk_centered_z = np.array(disk_z)
 
 disk_centered_x[:] = [x - com_x for x in disk_centered_x]
-a = disk_centered_x[0::6]
 disk_centered_y[:] = [y - com_y for y in disk_centered_y]
-b = disk_centered_y[0::6]
 disk_centered_z[:] = [z - com_z for z in disk_centered_z]
+
+
+########## Produces data for the x, y, and z position values for the gas ##########
+f = open('data_gas_xyz', 'w')
+for i in range(0, len(s.pos[0][:])):
+	f.write("%s %s %s\n" % (s.pos[0][i][0], s.pos[0][i][1], s.pos[0][i][2]))
+
+f.close()
+
+
+########## Produces data for the mass of the gas particles ##########
+f = open('data_gas_mass', 'w')
+for i in range(0, len(s.mass[0][:])):
+	f.write("%s\n" % s.mass[0][i])
+
+f.close()
+
+
+########## Sets up the  x, y, and z postion arrays for the gas ##########
+f2 = open('data_gas_xyz')
+lines = f2.readlines()
+
+f2.close()
+
+gas_x = []
+gas_y = []
+gas_z = []
+
+for line in lines:
+	p = line.split()
+	gas_x.append(float(p[0]))
+	gas_y.append(float(p[1]))
+	gas_z.append(float(p[2]))
+
+gas_xm = np.array(gas_x)
+gas_ym = np.array(gas_y)
+gas_zm = np.array(gas_z)
+
+
+########## Centers the values by subtracting the center of mass ##########
+gas_centered_x = np.array(gas_x)
+gas_centered_y = np.array(gas_y)
+gas_centered_z = np.array(gas_z)
+
+gas_centered_x[:] = [x - com_x for x in gas_centered_x]
+a = gas_centered_x[0::6]
+gas_centered_y[:] = [y - com_y for y in gas_centered_y]
+b = gas_centered_y[0::6]
+gas_centered_z[:] = [z - com_z for z in gas_centered_z]
 
 
 #################### VELOCITY ####################
@@ -106,15 +152,7 @@ for i in range(0, len(s.vel[2][:])):
 f.close()
 
 
-########## Produces data for the mass of the disk particles ##########
-f = open('data_disk_mass', 'w')
-for i in range(0, len(s.mass[2][:])):
-	f.write("%s\n" % s.mass[2][i])
-
-f.close()
-
-
-########## Sets up the  vx, vy, and vz velocity arrays ##########
+########## Sets up the  vx, vy, and vz velocity arrays for the disk ##########
 f2 = open('data_disk_vxyz')
 lines = f2.readlines()
 
@@ -171,37 +209,80 @@ disk_centered_vy[:] = [vy - mom_vy for vy in disk_centered_vy]
 disk_centered_vz[:] = [vz - mom_vz for vz in disk_centered_vz]
 
 
+########## Produces data for the vx, vy, and vz velocity values for the gas ##########
+f = open('data_gas_vxyz', 'w')
+for i in range(0, len(s.vel[0][:])):
+	f.write("%s %s %s\n" % (s.vel[0][i][0], s.vel[0][i][1], s.vel[0][i][2]))
+
+f.close()
+
+
+########## Sets up the  vx, vy, and vz velocity arrays for the gas ##########
+f2 = open('data_gas_vxyz')
+lines = f2.readlines()
+
+f2.close()
+
+gas_vx = []
+gas_vy = []
+gas_vz = []
+
+for line in lines:
+	p = line.split()
+	gas_vx.append(float(p[0]))
+	gas_vy.append(float(p[1]))
+	gas_vz.append(float(p[2]))
+
+gas_pvx = np.array(gas_vx)
+gas_pvy = np.array(gas_vy)
+gas_pvz = np.array(gas_vz)
+
+gas_vxm = np.array(gas_vx)
+gas_vym = np.array(gas_vy)
+gas_vzm = np.array(gas_vz)
+
+
+########## Centers the values by subtracting the momentum ##########
+gas_centered_vx = np.array(gas_vx)
+gas_centered_vy = np.array(gas_vy)
+gas_centered_vz = np.array(gas_vz)
+
+gas_centered_vx[:] = [vx - mom_vx for vx in gas_centered_vx]
+gas_centered_vy[:] = [vy - mom_vy for vy in gas_centered_vy]
+gas_centered_vz[:] = [vz - mom_vz for vz in gas_centered_vz]
+
+
 ########## Makes the transformations to cylindrical coordinates ##########
-r_disk = np.sqrt(disk_centered_x**2 + disk_centered_y**2)
-theta_disk = np.arctan2(disk_centered_y, disk_centered_x)
+r_gas = np.sqrt(gas_centered_x**2 + gas_centered_y**2)
+theta_gas = np.arctan2(gas_centered_y, gas_centered_x)
 	
-vr_disk = disk_centered_vx*np.cos(theta_disk) + disk_centered_vy*np.sin(theta_disk)
-vtheta_disk = disk_centered_vy*np.cos(theta_disk) - disk_centered_vx*np.sin(theta_disk)
+vr_gas = gas_centered_vx*np.cos(theta_gas) + gas_centered_vy*np.sin(theta_gas)
+vtheta_gas = gas_centered_vy*np.cos(theta_gas) - gas_centered_vx*np.sin(theta_gas)
 
 
-disk_centered_vr = np.array(vr_disk)
-disk_centered_vtheta = np.array(vtheta_disk)
+gas_centered_vr = np.array(vr_gas)
+gas_centered_vtheta = np.array(vtheta_gas)
 
 
 ########## Plots the Vz bar graphs ##########
 plt.subplot(121)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=400, vmin=-20, vmax=20)
-plt.title('Disk x vs y', fontsize=22)
+plt.hexbin(gas_centered_x, gas_centered_y, C=gas_centered_vz, cmap=cm.Set1, gridsize=300, vmin=-20, vmax=20)
+plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
+plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
 plt.subplot(122)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=400, vmin=-20, vmax=20)
+plt.hexbin(gas_centered_x, gas_centered_y, C=gas_centered_vz, cmap=cm.Set1, gridsize=300, vmin=-20, vmax=20)
 plt.plot(a, b, '.', markersize=3, alpha=0.3)
-plt.title('Disk x vs y', fontsize=22)
+plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
+plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
@@ -214,23 +295,23 @@ plt.show()
 
 ########## Plots the Vr bar graphs ##########
 plt.subplot(121)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vr, cmap=cm.jet_r, gridsize=400, vmin=-60, vmax=60)
-plt.title('Disk x vs y', fontsize=22)
+plt.hexbin(gas_centered_x, gas_centered_y, C=gas_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-60, vmax=60)
+plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
+plt.text(20, 20, 't = 26', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
 plt.subplot(122)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vr, cmap=cm.jet_r, gridsize=400, vmin=-60, vmax=60)
-plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.3)
-plt.title('Disk x vs y', fontsize=22)
+plt.hexbin(gas_centered_x, gas_centered_y, C=gas_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-60, vmax=60)
+plt.plot(a, b, '.', markersize=3, alpha=0.3)
+plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
+plt.text(20, 20, 't = 26', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
@@ -243,23 +324,23 @@ plt.show()
 
 ########## Plots the Vtheta bar graphs ##########
 plt.subplot(121)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vtheta, cmap=cm.jet_r, gridsize=400, vmin=180, vmax=240)
-plt.title('Disk x vs y', fontsize=22)
+plt.hexbin(gas_centered_x, gas_centered_y, C=gas_centered_vtheta, cmap=cm.jet_r, gridsize=300, vmin=180, vmax=240)
+plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
+plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
 plt.subplot(122)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vtheta, cmap=cm.jet_r, gridsize=400, vmin=180, vmax=240)
+plt.hexbin(gas_centered_x, gas_centered_y, C=gas_centered_vtheta, cmap=cm.jet_r, gridsize=300, vmin=180, vmax=240)
 plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.5)
-plt.title('Disk x vs y', fontsize=22)
+plt.title('Gas x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
+plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 

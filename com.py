@@ -100,15 +100,15 @@ plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 plt.show()
 
-#plt.plot(gas_centered_x, gas_centered_z, '.', markersize=3, alpha=0.3)
-#plt.title('Centered Gas x vs z', fontsize=22)
-#plt.xlabel('x (kpc)', fontsize=18)
-#plt.ylabel('z (kpc)', fontsize=18)
-#plt.text(20, 20, 't = 0', fontsize=15)
+plt.plot(gas_centered_x, gas_centered_z, '.', markersize=3, alpha=0.3)
+plt.title('Centered Gas x vs z', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('z (kpc)', fontsize=18)
+plt.text(20, 20, 't = 0', fontsize=15)
 #plt.axis([-25, 25, -25, 25])
 #plt.gca().set_aspect('equal', adjustable='box')
-#plt.grid()
-#plt.show()
+plt.grid()
+plt.show()
 
 
 
