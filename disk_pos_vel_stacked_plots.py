@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import glio
-s = glio.GadgetSnapshot('snapshot_029')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_040')						### Change snapshot here ###
 s.load()
 
 
@@ -183,89 +183,69 @@ disk_centered_vr = np.array(vr_disk)
 disk_centered_vtheta = np.array(vtheta_disk)
 
 
-########## Plots the Vz bar graphs ##########
-plt.subplot(121)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=400, vmin=-20, vmax=20)
-plt.title('Disk x vs y', fontsize=22)
+########## For loop that takes a slice of the data ##########
+x_slice = []
+y_slice = []
+vr_slice = []
+vtheta_slice = []
+vz_slice = []
+
+for i in range(len(disk_centered_y)):
+	if 1.0 >= disk_centered_y[i] >= 0.0:
+		x_slice.append(disk_centered_x[i])
+		y_slice.append(disk_centered_y[i])
+		vr_slice.append(disk_centered_vr[i])
+		vtheta_slice.append(disk_centered_vtheta[i])
+		vz_slice.append(disk_centered_vz[i])
+
+
+########## Plots ##########
+
+plt.subplot(414)
+plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
+#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
 plt.axis([-30, 30, -30, 30])
-plt.gca().set_aspect('equal', adjustable='box')
+#plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
-plt.subplot(122)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vz, cmap=cm.Set1, gridsize=400, vmin=-20, vmax=20)
-plt.plot(a, b, '.', markersize=3, alpha=0.3)
-plt.title('Disk x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
-plt.gca().set_aspect('equal', adjustable='box')
+plt.subplot(413)
+plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
+#plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vr (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
-cax = plt.axes([0.125, 0.075, 0.775, 0.03])
-cbar = plt.colorbar(cax = cax, orientation='horizontal')
-cbar.set_label('Vz (km/sec)', fontsize=18)
+plt.subplot(412)
+plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
+#plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vtheta (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
 
+plt.subplot(411)
+plt.plot(x_slice, vz_slice, '.', markersize=3, alpha=0.3)
+plt.title('Disk Density and Velocity Slices', fontsize=22)
+#plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vz (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplots_adjust(hspace=0.05)
 plt.show()
 
 
-########## Plots the Vr bar graphs ##########
-plt.subplot(121)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vr, cmap=cm.Set1, gridsize=400, vmin=-80, vmax=80)
-plt.title('Disk x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vr, cmap=cm.Set1, gridsize=400, vmin=-80, vmax=80)
-plt.plot(a, b, '.', markersize=3, alpha=0.3)
-plt.title('Disk x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-cax = plt.axes([0.125, 0.075, 0.775, 0.03])
-cbar = plt.colorbar(cax = cax, orientation='horizontal')
-cbar.set_label('Vr (km/sec)', fontsize=18)
-
-plt.show()
 
 
-########## Plots the Vtheta bar graphs ##########
-plt.subplot(121)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vtheta, cmap=cm.jet_r, gridsize=400, vmin=180, vmax=240)
-plt.title('Disk x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
 
-plt.subplot(122)
-plt.hexbin(disk_centered_x, disk_centered_y, C=disk_centered_vtheta, cmap=cm.jet_r, gridsize=400, vmin=180, vmax=240)
-plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.5)
-plt.title('Disk x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-plt.text(25, 25, 't = 0', fontsize=15)						### Make sure to change the time label ###
-plt.axis([-30, 30, -30, 30])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
 
-cax = plt.axes([0.125, 0.075, 0.775, 0.03])
-cbar = plt.colorbar(cax = cax, orientation='horizontal')
-cbar.set_label('Vtheta (km/sec)', fontsize=18)
 
-plt.show()
+
 

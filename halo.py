@@ -1,7 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 import glio
-s = glio.GadgetSnapshot('snapshot_015')
+s = glio.GadgetSnapshot('snapshot_040')
 s.load()
 
 f = open('data_halo_xyz', 'w')
@@ -42,9 +42,9 @@ halo_pz = np.array(halo_z)
 
 
 plt.plot(halo_px, halo_py, '.', markersize=2, alpha=0.2)
-plt.title('Halo x vs y', fontsize=30)
+plt.title('Halo x vs z', fontsize=30)
 plt.xlabel('x (kpc)', fontsize=25)
-plt.ylabel('y (kpc)' , fontsize=25)
+plt.ylabel('z (kpc)' , fontsize=25)
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
 plt.text(85, 90, 't = 15', fontsize=18)							### Make sure to change time label ###
