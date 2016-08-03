@@ -191,7 +191,7 @@ vtheta_slice = []
 vz_slice = []
 
 for i in range(len(disk_centered_y)):
-	if 3.0 >= disk_centered_y[i] >= 2.0:
+	if 1.0 >= disk_centered_y[i] >= 0.0:
 		x_slice.append(disk_centered_x[i])
 		y_slice.append(disk_centered_y[i])
 		vr_slice.append(disk_centered_vr[i])
@@ -227,12 +227,12 @@ plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
 plt.subplot(414)
-plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
+plt.hist(x_slice,1000)
 plt.xlabel('x (kpc)', fontsize=28)
 plt.ylabel('y (kpc)', fontsize=28)
 plt.xticks(fontsize=15)
 plt.yticks(fontsize=15)
-plt.axis([-30, 30, -30, 30])
+plt.axis([-30, 30, 0, 1600])
 plt.grid()
 
 plt.subplots_adjust(hspace=0.1)

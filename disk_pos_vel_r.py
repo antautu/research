@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import glio
-s = glio.GadgetSnapshot('snapshot_035')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_001')						### Change snapshot here ###
 s.load()
 
 
@@ -178,64 +178,115 @@ theta_disk = np.arctan2(disk_centered_y, disk_centered_x)
 vr_disk = disk_centered_vx*np.cos(theta_disk) + disk_centered_vy*np.sin(theta_disk)
 vtheta_disk = disk_centered_vy*np.cos(theta_disk) - disk_centered_vx*np.sin(theta_disk)
 
+disk_centered_r = np.array(r_disk)
+disk_centered_theta = np.array(theta_disk)
 
 disk_centered_vr = np.array(vr_disk)
 disk_centered_vtheta = np.array(vtheta_disk)
 
 
 ########## For loop that takes a slice of the data ##########
-x_slice = []
 y_slice = []
+r_slice = []
+theta_slice = []
 vr_slice = []
 vtheta_slice = []
 vz_slice = []
 
-for i in range(len(disk_centered_y)):
-	if 3.0 >= disk_centered_y[i] >= 2.0:
-		x_slice.append(disk_centered_x[i])
+for i in range(len(disk_centered_r)):
+	if 2*math.pi >= disk_centered_r[i] >= 0.0:
 		y_slice.append(disk_centered_y[i])
+		r_slice.append(disk_centered_r[i])
+		theta_slice.append(disk_centered_theta[i])
 		vr_slice.append(disk_centered_vr[i])
 		vtheta_slice.append(disk_centered_vtheta[i])
 		vz_slice.append(disk_centered_vz[i])
 
 
 ########## Plots ##########
-plt.subplot(411)
-plt.plot(x_slice, vz_slice, '.', markersize=3, alpha=0.3)
-plt.title('Disk Density and Velocity Slices', fontsize=30)
-plt.ylabel('vz (km/sec)', fontsize=28)
-plt.yticks(fontsize=15)
-plt.text(25, 200, 't = 35', fontsize=25)										### Make sure to change time label ###
-plt.axis([-30, 30, -300, 300])
-plt.tick_params(axis='x', labelbottom='off')
-plt.grid()
-
-plt.subplot(412)
-plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
-plt.ylabel('vtheta (km/sec)', fontsize=28)
-plt.yticks(fontsize=15)
-plt.axis([-30, 30, -300, 300])
-plt.tick_params(axis='x', labelbottom='off')
-plt.grid()
-
-plt.subplot(413)
-plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
-plt.ylabel('vr (km/sec)', fontsize=28)
-plt.yticks(fontsize=15)
-plt.axis([-30, 30, -300, 300])
-plt.tick_params(axis='x', labelbottom='off')
-plt.grid()
-
-plt.subplot(414)
-plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
-plt.xlabel('x (kpc)', fontsize=28)
-plt.ylabel('y (kpc)', fontsize=28)
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
+plt.subplot(121)
+plt.plot(disk_centered_theta, disk_centered_y, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
 plt.axis([-30, 30, -30, 30])
+plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
-plt.subplots_adjust(hspace=0.1)
+plt.subplot(122)
+plt.plot(theta_slice, y_slice, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs y', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('y (kpc)', fontsize=18)
+#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
+plt.axis([-30, 30, -30, 30])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.show()
+
+
+plt.subplot(121)
+plt.plot(disk_centered_theta, disk_centered_vr, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs vr', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vr (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.subplot(122)
+plt.plot(theta_slice, vr_slice, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs vr', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vr (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.show()
+
+
+plt.subplot(121)
+plt.plot(disk_centered_theta, disk_centered_vtheta, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs vtheta', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vtheta (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.subplot(122)
+plt.plot(theta_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs vtheta', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vtheta (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.show()
+
+
+plt.subplot(121)
+plt.plot(disk_centered_theta, disk_centered_vz, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs vz', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vz (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
+plt.subplot(122)
+plt.plot(theta_slice, vz_slice, '.', markersize=3, alpha=0.3)
+plt.title('Disk x vs vz', fontsize=22)
+plt.xlabel('x (kpc)', fontsize=18)
+plt.ylabel('vz (km/sec)', fontsize=18)
+plt.axis([-30, 30, -300, 300])
+#plt.gca().set_aspect('equal', adjustable='box')
+plt.grid()
+
 plt.show()
 
 
