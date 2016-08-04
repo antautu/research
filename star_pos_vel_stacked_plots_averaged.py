@@ -281,87 +281,104 @@ for i in range(len(star_centered_y)):
 
 
 ########## Plots ##########
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_y, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
-plt.axis([-20, 20, -20, 20])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
-plt.axis([-20, 20, -5, 5])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.show()
-
-
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_vr, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vr', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vr (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vr', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vr (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.show()
-
-
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_vtheta, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vtheta', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vtheta (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vtheta', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vtheta (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.show()
-
-
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_vz, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vz', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vz (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
+plt.subplot(411)
 plt.plot(x_slice, vz_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vz', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vz (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
+plt.title('Star Density and Velocity Slices', fontsize=30)
+plt.ylabel('vz (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.text(25, 200, 't = 35', fontsize=25)										### Make sure to change time label ###
+plt.axis([-30, 30, -300, 300])
+plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
+plt.subplot(412)
+plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
+plt.ylabel('vtheta (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -300, 300])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(413)
+plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
+plt.ylabel('vr (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -300, 300])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(414)
+plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
+plt.xlabel('x (kpc)', fontsize=28)
+plt.ylabel('y (kpc)', fontsize=28)
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -5, 5])
+plt.grid()
+
+plt.subplots_adjust(hspace=0.1)
 plt.show()
+
+
+########## Binned and averaged velocity plots and density histogram ##########
+
+########## Creates arrays to be plotted ##########
+wn_vz, bins, patches = plt.hist(x_slice, bins=300, weights=vz_slice)
+n_vz, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vz = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vz))])
+averages_vz = wn_vz / n_vz
+mask_vz = np.logical_not( np.isnan(averages_vz))
+
+wn_vtheta, bins, patches = plt.hist(x_slice, bins=300, weights=vtheta_slice)
+n_vtheta, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vtheta = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vtheta))])
+averages_vtheta = wn_vtheta / n_vtheta
+mask_vtheta = np.logical_not( np.isnan(averages_vtheta))
+
+wn_vr, bins, patches = plt.hist(x_slice, bins=300, weights=vr_slice)
+n_vr, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vr = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vr))])
+averages_vr = wn_vr / n_vr
+mask_vr = np.logical_not( np.isnan(averages_vr))
+
+
+########## Plots ##########
+plt.subplot(411)
+plt.plot(bins_mean_vz[mask_vz], averages_vz[mask_vz])
+plt.title('Star Averaged Density and Velocity Slices', fontsize=30)
+plt.ylabel('vz (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.text(25, 10, 't = 40', fontsize=25)										### Make sure to change time label ###
+plt.axis([-30, 30, -20, 20])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(412)
+plt.plot(bins_mean_vtheta[mask_vtheta], averages_vtheta[mask_vtheta])
+plt.ylabel('vtheta (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, 0, 250])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(413)
+plt.plot(bins_mean_vr[mask_vr], averages_vr[mask_vr])
+plt.ylabel('vr (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -60, 60])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(414)
+plt.hist(x_slice, bins=300, weights=y_slice)
+plt.xlabel('x (kpc)', fontsize=28)
+plt.ylabel('Number of Particles', fontsize=28)
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, 0, 7000])				### Changes for each time step ###
+plt.grid()
+
+plt.subplots_adjust(hspace=0.1)
+plt.show()
+
+

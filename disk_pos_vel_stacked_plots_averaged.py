@@ -1,10 +1,11 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm 
+import matplotlib.cm as cm
 import glio
-s = glio.GadgetSnapshot('snapshot_005')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_035')						### Change snapshot here ###
 s.load()
+
 
 #################### POSITION ####################
 ########## Produces data for the x, y, and z position values for the disk ##########
@@ -15,7 +16,7 @@ for i in range(0, len(s.pos[2][:])):
 f.close()
 
 
-########## Produces data for the mass of the disk particles ##########
+########## Produces data for the mass of the gas particles ##########
 f = open('data_disk_mass', 'w')
 for i in range(0, len(s.mass[2][:])):
 	f.write("%s\n" % s.mass[2][i])
@@ -23,7 +24,7 @@ for i in range(0, len(s.mass[2][:])):
 f.close()
 
 
-########## Sets up the  x, y, and z postion arrays for the disk ##########
+########## Sets up the  x, y, and z postion arrays ##########
 f2 = open('data_disk_xyz')
 lines = f2.readlines()
 
@@ -90,57 +91,10 @@ disk_centered_y = np.array(disk_y)
 disk_centered_z = np.array(disk_z)
 
 disk_centered_x[:] = [x - com_x for x in disk_centered_x]
+a = disk_centered_x[0::6]
 disk_centered_y[:] = [y - com_y for y in disk_centered_y]
+b = disk_centered_y[0::6]
 disk_centered_z[:] = [z - com_z for z in disk_centered_z]
-
-
-########## Produces data for the x, y, and z position values for the gas ##########
-f = open('data_gas_xyz', 'w')
-for i in range(0, len(s.pos[0][:])):
-	f.write("%s %s %s\n" % (s.pos[0][i][0], s.pos[0][i][1], s.pos[0][i][2]))
-
-f.close()
-
-
-########## Produces data for the mass of the gas particles ##########
-f = open('data_gas_mass', 'w')
-for i in range(0, len(s.mass[0][:])):
-	f.write("%s\n" % s.mass[0][i])
-
-f.close()
-
-
-########## Sets up the  x, y, and z postion arrays for the gas ##########
-f2 = open('data_gas_xyz')
-lines = f2.readlines()
-
-f2.close()
-
-gas_x = []
-gas_y = []
-gas_z = []
-
-for line in lines:
-	p = line.split()
-	gas_x.append(float(p[0]))
-	gas_y.append(float(p[1]))
-	gas_z.append(float(p[2]))
-
-gas_xm = np.array(gas_x)
-gas_ym = np.array(gas_y)
-gas_zm = np.array(gas_z)
-
-
-########## Centers the values by subtracting the center of mass ##########
-gas_centered_x = np.array(gas_x)
-gas_centered_y = np.array(gas_y)
-gas_centered_z = np.array(gas_z)
-
-gas_centered_x[:] = [x - com_x for x in gas_centered_x]
-a = gas_centered_x[0::6]
-gas_centered_y[:] = [y - com_y for y in gas_centered_y]
-b = gas_centered_y[0::6]
-gas_centered_z[:] = [z - com_z for z in gas_centered_z]
 
 
 #################### VELOCITY ####################
@@ -152,7 +106,15 @@ for i in range(0, len(s.vel[2][:])):
 f.close()
 
 
-########## Sets up the  vx, vy, and vz velocity arrays for the disk ##########
+########## Produces data for the mass of the disk particles ##########
+f = open('data_disk_mass', 'w')
+for i in range(0, len(s.mass[2][:])):
+	f.write("%s\n" % s.mass[2][i])
+
+f.close()
+
+
+########## Sets up the  vx, vy, and vz velocity arrays ##########
 f2 = open('data_disk_vxyz')
 lines = f2.readlines()
 
@@ -209,59 +171,16 @@ disk_centered_vy[:] = [vy - mom_vy for vy in disk_centered_vy]
 disk_centered_vz[:] = [vz - mom_vz for vz in disk_centered_vz]
 
 
-########## Produces data for the vx, vy, and vz velocity values for the gas ##########
-f = open('data_gas_vxyz', 'w')
-for i in range(0, len(s.vel[0][:])):
-	f.write("%s %s %s\n" % (s.vel[0][i][0], s.vel[0][i][1], s.vel[0][i][2]))
-
-f.close()
-
-
-########## Sets up the  vx, vy, and vz velocity arrays for the gas ##########
-f2 = open('data_gas_vxyz')
-lines = f2.readlines()
-
-f2.close()
-
-gas_vx = []
-gas_vy = []
-gas_vz = []
-
-for line in lines:
-	p = line.split()
-	gas_vx.append(float(p[0]))
-	gas_vy.append(float(p[1]))
-	gas_vz.append(float(p[2]))
-
-gas_pvx = np.array(gas_vx)
-gas_pvy = np.array(gas_vy)
-gas_pvz = np.array(gas_vz)
-
-gas_vxm = np.array(gas_vx)
-gas_vym = np.array(gas_vy)
-gas_vzm = np.array(gas_vz)
-
-
-########## Centers the values by subtracting the momentum ##########
-gas_centered_vx = np.array(gas_vx)
-gas_centered_vy = np.array(gas_vy)
-gas_centered_vz = np.array(gas_vz)
-
-gas_centered_vx[:] = [vx - mom_vx for vx in gas_centered_vx]
-gas_centered_vy[:] = [vy - mom_vy for vy in gas_centered_vy]
-gas_centered_vz[:] = [vz - mom_vz for vz in gas_centered_vz]
-
-
 ########## Makes the transformations to cylindrical coordinates ##########
-r_gas = np.sqrt(gas_centered_x**2 + gas_centered_y**2)
-theta_gas = np.arctan2(gas_centered_y, gas_centered_x)
+r_disk = np.sqrt(disk_centered_x**2 + disk_centered_y**2)
+theta_disk = np.arctan2(disk_centered_y, disk_centered_x)
 	
-vr_gas = gas_centered_vx*np.cos(theta_gas) + gas_centered_vy*np.sin(theta_gas)
-vtheta_gas = gas_centered_vy*np.cos(theta_gas) - gas_centered_vx*np.sin(theta_gas)
+vr_disk = disk_centered_vx*np.cos(theta_disk) + disk_centered_vy*np.sin(theta_disk)
+vtheta_disk = disk_centered_vy*np.cos(theta_disk) - disk_centered_vx*np.sin(theta_disk)
 
 
-gas_centered_vr = np.array(vr_gas)
-gas_centered_vtheta = np.array(vtheta_gas)
+disk_centered_vr = np.array(vr_disk)
+disk_centered_vtheta = np.array(vtheta_disk)
 
 
 ########## For loop that takes a slice of the data ##########
@@ -271,23 +190,23 @@ vr_slice = []
 vtheta_slice = []
 vz_slice = []
 
-for i in range(len(gas_centered_y)):
-	if 4.0 >= gas_centered_y[i] >= 3.0:
-		x_slice.append(gas_centered_x[i])
-		y_slice.append(gas_centered_y[i])
-		vr_slice.append(gas_centered_vr[i])
-		vtheta_slice.append(gas_centered_vtheta[i])
-		vz_slice.append(gas_centered_vz[i])
+for i in range(len(disk_centered_y)):
+	if 1.0 >= disk_centered_y[i] >= 0.0:
+		x_slice.append(disk_centered_x[i])
+		y_slice.append(disk_centered_y[i])
+		vr_slice.append(disk_centered_vr[i])
+		vtheta_slice.append(disk_centered_vtheta[i])
+		vz_slice.append(disk_centered_vz[i])
 
 
 ########## Plots ##########
 plt.subplot(411)
 plt.plot(x_slice, vz_slice, '.', markersize=3, alpha=0.3)
-plt.title('Gas Density and Velocity Slices', fontsize=30)
+plt.title('Disk Density and Velocity Slices', fontsize=30)
 plt.ylabel('vz (km/sec)', fontsize=28)
 plt.yticks(fontsize=15)
-plt.text(25, 30, 't = 35', fontsize=25)										### Make sure to change time label ###
-plt.axis([-30, 30, -50, 50])
+plt.text(25, 200, 't = 35', fontsize=25)										### Make sure to change time label ###
+plt.axis([-30, 30, -300, 300])
 plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
@@ -295,7 +214,7 @@ plt.subplot(412)
 plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
 plt.ylabel('vtheta (km/sec)', fontsize=28)
 plt.yticks(fontsize=15)
-plt.axis([-30, 30, -100, 300])
+plt.axis([-30, 30, -300, 300])
 plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
@@ -303,7 +222,7 @@ plt.subplot(413)
 plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
 plt.ylabel('vr (km/sec)', fontsize=28)
 plt.yticks(fontsize=15)
-plt.axis([-30, 30, -100, 100])
+plt.axis([-30, 30, -300, 300])
 plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
@@ -318,4 +237,67 @@ plt.grid()
 
 plt.subplots_adjust(hspace=0.1)
 plt.show()
+
+########## Binned and averaged velocity plots and density histogram ##########
+
+########## Creates arrays to be plotted ##########
+wn_vz, bins, patches = plt.hist(x_slice, bins=300, weights=vz_slice)
+n_vz, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vz = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vz))])
+averages_vz = wn_vz / n_vz
+mask_vz = np.logical_not( np.isnan(averages_vz))
+
+wn_vtheta, bins, patches = plt.hist(x_slice, bins=300, weights=vtheta_slice)
+n_vtheta, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vtheta = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vtheta))])
+averages_vtheta = wn_vtheta / n_vtheta
+mask_vtheta = np.logical_not( np.isnan(averages_vtheta))
+
+wn_vr, bins, patches = plt.hist(x_slice, bins=300, weights=vr_slice)
+n_vr, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vr = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vr))])
+averages_vr = wn_vr / n_vr
+mask_vr = np.logical_not( np.isnan(averages_vr))
+
+
+########## Plots ##########
+plt.subplot(411)
+plt.plot(bins_mean_vz[mask_vz], averages_vz[mask_vz])
+plt.title('Disk Averaged Density and Velocity Slices', fontsize=30)
+plt.ylabel('vz (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.text(25, 15, 't = 35', fontsize=25)										### Make sure to change time label ###
+plt.axis([-30, 30, -25, 25])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(412)
+plt.plot(bins_mean_vtheta[mask_vtheta], averages_vtheta[mask_vtheta])
+plt.ylabel('vtheta (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, 0, 250])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(413)
+plt.plot(bins_mean_vr[mask_vr], averages_vr[mask_vr])
+plt.ylabel('vr (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -50, 50])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(414)
+plt.hist(x_slice, bins=300, weights=y_slice)
+plt.xlabel('x (kpc)', fontsize=28)
+plt.ylabel('Number of Particles', fontsize=28)
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, 0, 1200])			### Need to change 1200 to 2000 for t=35 ###
+plt.grid()
+
+plt.subplots_adjust(hspace=0.1)
+plt.show()
+
+
 

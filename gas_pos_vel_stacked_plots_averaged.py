@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm 
 import glio
-s = glio.GadgetSnapshot('snapshot_005')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_040')						### Change snapshot here ###
 s.load()
 
 #################### POSITION ####################
@@ -272,7 +272,7 @@ vtheta_slice = []
 vz_slice = []
 
 for i in range(len(gas_centered_y)):
-	if 4.0 >= gas_centered_y[i] >= 3.0:
+	if 1.0 >= gas_centered_y[i] >= 0.0:
 		x_slice.append(gas_centered_x[i])
 		y_slice.append(gas_centered_y[i])
 		vr_slice.append(gas_centered_vr[i])
@@ -318,4 +318,67 @@ plt.grid()
 
 plt.subplots_adjust(hspace=0.1)
 plt.show()
+
+
+########## Binned and averaged velocity plots and density histogram ##########
+
+########## Creates arrays to be plotted ##########
+wn_vz, bins, patches = plt.hist(x_slice, bins=300, weights=vz_slice)
+n_vz, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vz = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vz))])
+averages_vz = wn_vz / n_vz
+mask_vz = np.logical_not( np.isnan(averages_vz))
+
+wn_vtheta, bins, patches = plt.hist(x_slice, bins=300, weights=vtheta_slice)
+n_vtheta, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vtheta = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vtheta))])
+averages_vtheta = wn_vtheta / n_vtheta
+mask_vtheta = np.logical_not( np.isnan(averages_vtheta))
+
+wn_vr, bins, patches = plt.hist(x_slice, bins=300, weights=vr_slice)
+n_vr, bins, patches = plt.hist(x_slice, bins=300)
+bins_mean_vr = np.array([0.5 * (bins[i] + bins[i+1]) for i in range(len(wn_vr))])
+averages_vr = wn_vr / n_vr
+mask_vr = np.logical_not( np.isnan(averages_vr))
+
+
+########## Plots ##########
+plt.subplot(411)
+plt.plot(bins_mean_vz[mask_vz], averages_vz[mask_vz])
+plt.title('Gas Averaged Density and Velocity Slices', fontsize=30)
+plt.ylabel('vz (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.text(25, 10, 't = 40', fontsize=25)										### Make sure to change time label ###
+plt.axis([-30, 30, -15, 15])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(412)
+plt.plot(bins_mean_vtheta[mask_vtheta], averages_vtheta[mask_vtheta])
+plt.ylabel('vtheta (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, 0, 250])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(413)
+plt.plot(bins_mean_vr[mask_vr], averages_vr[mask_vr])
+plt.ylabel('vr (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -150, 150])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(414)
+plt.hist(x_slice, bins=300, weights=y_slice)
+plt.xlabel('x (kpc)', fontsize=28)
+plt.ylabel('Number of Particles', fontsize=28)
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, 0, 700])
+plt.grid()
+
+plt.subplots_adjust(hspace=0.1)
+plt.show()
+
 

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm 
 import glio
-s = glio.GadgetSnapshot('snapshot_040')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_035')						### Change snapshot here ###
 s.load()
 
 #################### POSITION ####################
@@ -281,87 +281,41 @@ for i in range(len(star_centered_y)):
 
 
 ########## Plots ##########
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_y, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
-plt.axis([-20, 20, -20, 20])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs y', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('y (kpc)', fontsize=18)
-#plt.text(25, 25, 't = 40', fontsize=15)						### Make sure to change time label ###
-plt.axis([-20, 20, -5, 5])
-plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.show()
-
-
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_vr, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vr', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vr (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vr', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vr (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.show()
-
-
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_vtheta, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vtheta', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vtheta (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
-plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vtheta', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vtheta (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.show()
-
-
-plt.subplot(121)
-plt.plot(star_centered_x, star_centered_vz, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vz', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vz (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
-plt.grid()
-
-plt.subplot(122)
+plt.subplot(411)
 plt.plot(x_slice, vz_slice, '.', markersize=3, alpha=0.3)
-plt.title('Star x vs vz', fontsize=22)
-plt.xlabel('x (kpc)', fontsize=18)
-plt.ylabel('vz (km/sec)', fontsize=18)
-plt.axis([-20, 20, -300, 300])
-#plt.gca().set_aspect('equal', adjustable='box')
+plt.title('Star Density and Velocity Slices', fontsize=30)
+plt.ylabel('vz (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.text(25, 200, 't = 35', fontsize=25)										### Make sure to change time label ###
+plt.axis([-30, 30, -300, 300])
+plt.tick_params(axis='x', labelbottom='off')
 plt.grid()
 
+plt.subplot(412)
+plt.plot(x_slice, vtheta_slice, '.', markersize=3, alpha=0.3)
+plt.ylabel('vtheta (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -300, 300])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(413)
+plt.plot(x_slice, vr_slice, '.', markersize=3, alpha=0.3)
+plt.ylabel('vr (km/sec)', fontsize=28)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -300, 300])
+plt.tick_params(axis='x', labelbottom='off')
+plt.grid()
+
+plt.subplot(414)
+plt.plot(x_slice, y_slice, '.', markersize=3, alpha=0.3)
+plt.xlabel('x (kpc)', fontsize=28)
+plt.ylabel('y (kpc)', fontsize=28)
+plt.xticks(fontsize=15)
+plt.yticks(fontsize=15)
+plt.axis([-30, 30, -5, 5])
+plt.grid()
+
+plt.subplots_adjust(hspace=0.1)
 plt.show()
+
