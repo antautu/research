@@ -155,7 +155,7 @@ for num1 in range(5):
 			sub = 6
 			print sub 
 		elif num1 == 1 and 1 <= num2 <= 3:
-			sub = 3
+			sub = 6
 			print sub 
 		elif num1 == 1 and 4 <= num2 <=5:
 			sub = 8
@@ -335,7 +335,7 @@ for num1 in range(5):
 		
 		########## Plots the Vr bar graphs ##########
 		plt.subplot(121)
-		plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-60, vmax=60)
+		plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-80, vmax=80)
 		plt.title('Star x vs y', fontsize=22)
 		plt.xlabel('x (kpc)', fontsize=18)
 		plt.ylabel('y (kpc)', fontsize=18)
@@ -345,7 +345,7 @@ for num1 in range(5):
 		plt.grid()
 		
 		plt.subplot(122)
-		plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-60, vmax=60)
+		plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-80, vmax=80)
 		plt.plot(a, b, '.', markersize=3, alpha=0.3)
 		plt.title('Star x vs y', fontsize=22)
 		plt.xlabel('x (kpc)', fontsize=18)

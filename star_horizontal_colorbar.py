@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm 
 import glio
-s = glio.GadgetSnapshot('snapshot_040')						### Change snapshot here ###
+s = glio.GadgetSnapshot('snapshot_013')						### Change snapshot here ###
 s.load()
 
 #################### POSITION ####################
@@ -75,13 +75,13 @@ disk_zm_sum = sum(disk_zm)
 disk_mass_sum = sum(disk_m)
 
 com_x = disk_xm_sum / disk_mass_sum
-print com_x
+#print com_x
 
 com_y = disk_ym_sum / disk_mass_sum
-print com_y
+#print com_y
 
 com_z = disk_zm_sum / disk_mass_sum
-print com_z
+#print com_z
 
 
 ########## Centers the values by subtracting the center of mass ##########
@@ -190,13 +190,13 @@ disk_vzm_sum = sum(disk_vzm)
 disk_mass_sum = sum(disk_m)
 
 mom_vx = disk_vxm_sum / disk_mass_sum
-print mom_vx
+#print mom_vx
 
 mom_vy = disk_vym_sum / disk_mass_sum
-print mom_vy
+#print mom_vy
 
 mom_vz = disk_vzm_sum / disk_mass_sum
-print mom_vz
+#print mom_vz
 
 
 ########## Centers the values by subtracting the momentum ##########
@@ -270,7 +270,7 @@ plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vz, cmap=cm.Set1, g
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.text(20, 20, 't = 13', fontsize=15)						### Make sure to change the time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -281,7 +281,7 @@ plt.plot(a, b, '.', markersize=3, alpha=0.3)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.text(20, 20, 't = 13', fontsize=15)						### Make sure to change the time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -295,22 +295,22 @@ plt.show()
 
 ########## Plots the Vr bar graphs ##########
 plt.subplot(121)
-plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-60, vmax=60)
+plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-80, vmax=80)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 26', fontsize=15)						### Make sure to change the time label ###
+plt.text(20, 20, 't = 13', fontsize=15)						### Make sure to change the time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
 
 plt.subplot(122)
-plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-60, vmax=60)
+plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vr, cmap=cm.Set1, gridsize=300, vmin=-80, vmax=80)
 plt.plot(a, b, '.', markersize=3, alpha=0.3)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 26', fontsize=15)						### Make sure to change the time label ###
+plt.text(20, 20, 't = 13', fontsize=15)						### Make sure to change the time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -328,7 +328,7 @@ plt.hexbin(star_centered_x, star_centered_y, C=star_centered_vtheta, cmap=cm.jet
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.text(20, 20, 't = 13', fontsize=15)						### Make sure to change the time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
@@ -339,7 +339,7 @@ plt.plot(a, b, '.', color='blueviolet', markersize=3, alpha=0.5)
 plt.title('Star x vs y', fontsize=22)
 plt.xlabel('x (kpc)', fontsize=18)
 plt.ylabel('y (kpc)', fontsize=18)
-plt.text(20, 20, 't = 10', fontsize=15)						### Make sure to change the time label ###
+plt.text(20, 20, 't = 13', fontsize=15)						### Make sure to change the time label ###
 plt.axis([-25, 25, -25, 25])
 plt.gca().set_aspect('equal', adjustable='box')
 plt.grid()
